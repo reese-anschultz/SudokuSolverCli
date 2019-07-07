@@ -1,12 +1,13 @@
-﻿using System;
+﻿using SudokuSolverCli.UserRequestHandlers;
 
 namespace SudokuSolverCli
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            Console.WriteLine("Hello World!");
+            var userRequestHandlers = new SetDimensions();
+            userRequestHandlers.HandleRequest(new UserRequest {Command = "dim", Argument = "8,8"});
         }
     }
 }
