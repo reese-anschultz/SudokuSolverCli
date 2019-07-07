@@ -32,8 +32,7 @@ namespace SudokuSolverCli.UserRequestHandlers
                 return;
             }
 
-            var elementSet = ElementSet.MakeElementSet(sizes[0] * sizes[1]);
-            elementSet.ToList().ForEach(Console.WriteLine);
+            Program.Board = new Board(sizes[0], sizes[1]);
         }
     }
 }

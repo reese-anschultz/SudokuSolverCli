@@ -13,6 +13,7 @@ namespace SudokuSolverCli
         public static IEnumerable<UserRequestHandler> UserRequestHandlers;
         private static CompositionContainer _container;
         public static bool UserRequestedExit = false;
+        public static Board Board = new Board(3, 3);
 
         public static void Main()
         {
