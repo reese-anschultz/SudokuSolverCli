@@ -9,4 +9,13 @@
     <PackageReference Include="System.ComponentModel.Composition" Version="4.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="UserRequestFiles\MainUserRequest.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="UserRequestFiles\NestedUserRequest.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

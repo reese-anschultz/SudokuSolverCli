@@ -2,47 +2,44 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.IO;
 using System.Linq;
 
 namespace SudokuSolverCli
 {
+    [Export]
     internal class Program
     {
-        [ImportMany] private IEnumerable<UserRequestHandler> _userRequestHandlers;
+        private static IEnumerable<UserRequestHandler> _userRequestHandlers;
+        private static CompositionContainer _container;
+        public static bool UserRequestedExit = false;
 
         public static void Main()
         {
-            new Program().MainInstance();
+            //Create the CompositionContainer with all the parts found in the
+            //same assembly as the Program class
+            using (_container = new CompositionContainer(new AssemblyCatalog(typeof(Program).Assembly)))
+            {
+                _userRequestHandlers = _container.GetExportedValues<UserRequestHandler>();
+                HandleUserRequestsFromTextReader(Console.In);
+            }
         }
 
-        private void MainInstance()
+        public static void HandleUserRequestsFromTextReader(TextReader textReader)
         {
-            //An aggregate catalog that combines multiple catalogs
-            var catalog = new AggregateCatalog();
-            //Adds all the parts found in the same assembly as the Program class
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
-
-            //Create the CompositionContainer with the parts in the catalog
-            var container = new CompositionContainer(catalog);
-
-            //Fill the imports of this object
-            try
-            {
-                container.ComposeParts(this);
-            }
-            catch (CompositionException compositionException)
-            {
-                Console.WriteLine(compositionException.ToString());
-            }
-
-            //var userRequestHandlers = new SetDimensions();
             var firstUserRequestHandler =
                 _userRequestHandlers.Aggregate(default(UserRequestHandler), (previous, handler) =>
                 {
                     handler.SetSuccessor(previous);
                     return handler;
                 });
-            firstUserRequestHandler.HandleRequest(new UserRequest {Command = "dim", Argument = "3,3"});
+            while (!UserRequestedExit && textReader.TryReadLine(out var line))
+            {
+                var parts = line.Split(null, 2); // Split into two parts based upon white space
+                parts = parts.Concat(Enumerable.Repeat("", 2 - parts.Length)).ToArray();
+                firstUserRequestHandler.HandleRequest(new UserRequest
+                    {Command = parts[0], Argument = parts[1]});
+            }
         }
     }
 }
