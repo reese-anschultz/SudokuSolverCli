@@ -10,7 +10,7 @@ namespace SudokuSolverCli
     [Export]
     internal class Program
     {
-        private static IEnumerable<UserRequestHandler> _userRequestHandlers;
+        public static IEnumerable<UserRequestHandler> UserRequestHandlers;
         private static CompositionContainer _container;
         public static bool UserRequestedExit = false;
 
@@ -20,7 +20,7 @@ namespace SudokuSolverCli
             //same assembly as the Program class
             using (_container = new CompositionContainer(new AssemblyCatalog(typeof(Program).Assembly)))
             {
-                _userRequestHandlers = _container.GetExportedValues<UserRequestHandler>();
+                UserRequestHandlers = _container.GetExportedValues<UserRequestHandler>();
                 HandleUserRequestsFromTextReader(Console.In);
             }
         }
@@ -28,7 +28,7 @@ namespace SudokuSolverCli
         public static void HandleUserRequestsFromTextReader(TextReader textReader)
         {
             var firstUserRequestHandler =
-                _userRequestHandlers.Aggregate(default(UserRequestHandler), (previous, handler) =>
+                UserRequestHandlers.Aggregate(default(UserRequestHandler), (previous, handler) =>
                 {
                     handler.SetSuccessor(previous);
                     return handler;
