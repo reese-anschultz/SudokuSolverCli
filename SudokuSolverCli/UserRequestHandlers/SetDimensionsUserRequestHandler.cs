@@ -5,9 +5,9 @@ using System.Linq;
 namespace SudokuSolverCli.UserRequestHandlers
 {
     [Export(typeof(UserRequestHandler))]
-    public class SetDimensions : UserRequestHandler
+    public class SetDimensionsUserRequestHandler : UserRequestHandler
     {
-        public SetDimensions() : base("dim")
+        public SetDimensionsUserRequestHandler() : base("dim")
         {
         }
 
