@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Linq;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
+    [Export(typeof(UserRequestHandler))]
     public class SetDimensions : UserRequestHandler
     {
         public SetDimensions() : base("dim")
