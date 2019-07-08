@@ -2,8 +2,9 @@
 {
     public class Cell
     {
-        private readonly ElementSet _currentElementSet;
         public readonly ElementSet CompleteElementSet;
+
+        private ElementSet _currentElementSet;
 
         public Cell(ElementSet completeElementSet)
         {
@@ -13,7 +14,9 @@
 
         public bool RemoveElements(ElementSet elements)
         {
-            return _currentElementSet.RemoveWhere(elements.Contains) != 0;
+            var originalElementSet = _currentElementSet;
+            _currentElementSet = originalElementSet.Remove(elements);
+            return !originalElementSet.SetEquals(_currentElementSet);
         }
     }
 }
