@@ -5,6 +5,7 @@ namespace SudokuSolverCli
     public abstract class UserRequestHandler : ChainOfResponsibilityHandlerWithPredicate<UserRequest>
     {
         private readonly string _command;
+        public virtual int Ordinal { get; } = 0;
 
         protected UserRequestHandler(string command)
         {
