@@ -29,17 +29,18 @@ namespace SudokuSolverCli
         public static void HandleUserRequestsFromTextReader(TextReader textReader)
         {
             var firstUserRequestHandler =
-                UserRequestHandlers.Aggregate(default(UserRequestHandler), (previous, handler) =>
-                {
-                    handler.SetSuccessor(previous);
-                    return handler;
-                });
+                UserRequestHandlers.OrderByDescending(handler => handler.Ordinal).Aggregate(default(UserRequestHandler),
+                    (previous, handler) =>
+                    {
+                        handler.SetSuccessor(previous);
+                        return handler;
+                    });
             while (!UserRequestedExit && textReader.TryReadLine(out var line))
             {
                 var parts = line.Split(null, 2); // Split into two parts based upon white space
                 parts = parts.Concat(Enumerable.Repeat("", 2 - parts.Length)).ToArray();
                 firstUserRequestHandler.HandleRequest(new UserRequest
-                    {Command = parts[0], Argument = parts[1]});
+                { Command = parts[0], Argument = parts[1] });
             }
         }
     }
