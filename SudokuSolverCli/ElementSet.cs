@@ -16,7 +16,7 @@ namespace SudokuSolverCli
             if (collection is IImmutableSet<Element> immutableSetImplementation)
                 _immutableSetImplementation = immutableSetImplementation;
             else
-                _immutableSetImplementation = ImmutableHashSet.CreateRange(collection);
+                _immutableSetImplementation = ImmutableSortedSet.CreateRange(collection);
         }
 
         public int Count => _immutableSetImplementation.Count;
