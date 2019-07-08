@@ -19,40 +19,36 @@ namespace SudokuSolverCli.UserRequestHandlers
             {
                 Console.WriteLine("Expected two arguments: x,y name");
                 return;
-            }
 
+            }
             var indexesArgument = arguments[0];
             var elementNameArgument = arguments[1];
-
             var indexesArguments = indexesArgument.Split(',');
             if (indexesArguments.Length != 2)
             {
                 Console.WriteLine("Expected x,y positions");
                 return;
-            }
 
-            uint[] indexes;
+            }
+            var completeElementSet = Program.Board.CompleteElementSet;
+            Element[] indexes;
             try
             {
-                indexes = indexesArguments.Select(uint.Parse).ToArray();
+                indexes = indexesArguments.Select(indexName=>completeElementSet.Parse(indexName)).ToArray();
             }
-            catch (FormatException e)
+            catch (ArgumentException e)
             {
                 Console.WriteLine(e);
                 return;
+
             }
-
-
-            var cell = Program.Board.GetCell(indexes[0], indexes[1]);
-            var impossibleElementSet = new ElementSet(cell.CompleteElementSet);
-            if (!impossibleElementSet.TryParse(elementNameArgument, out var element))
+            if (!completeElementSet.TryParse(elementNameArgument, out var element))
             {
                 Console.WriteLine("Expected an element name");
                 return;
-            }
 
-            impossibleElementSet.Remove(element);
-            cell.RemoveElements(impossibleElementSet);
+            }
+            Program.Board.GetCell(indexes[0], indexes[1]).RemoveElements(completeElementSet.Remove(element));
         }
     }
 }

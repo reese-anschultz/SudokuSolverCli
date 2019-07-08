@@ -1,22 +1,25 @@
-﻿namespace SudokuSolverCli
+﻿using System.Collections.Generic;
+
+namespace SudokuSolverCli
 {
     public class Board
     {
-        private readonly Cell[,] _cells;
+        private readonly Dictionary<(Element column, Element row), Cell> _cells =
+            new Dictionary<(Element column, Element row), Cell>();
+
+        public readonly ElementSet CompleteElementSet;
 
         public Board(uint width, uint height)
         {
-            var sideLength = width * height;
-            var completeElementSet = ElementSet.MakeElementSet(sideLength);
-            _cells = new Cell[completeElementSet.Count, completeElementSet.Count];
-            for (uint w = 0; w < sideLength; ++w)
-            for (uint h = 0; h < sideLength; ++h)
-                _cells[w, h] = new Cell(completeElementSet);
+            CompleteElementSet = ElementSet.MakeElementSet(width * height);
+            foreach (var columnElement in CompleteElementSet)
+                foreach (var rowElement in CompleteElementSet)
+                    _cells[(columnElement, rowElement)] = new Cell(CompleteElementSet);
         }
 
-        public Cell GetCell(uint x, uint y)
+        public Cell GetCell(Element column, Element row)
         {
-            return _cells[x, y];
+            return _cells[(column, row)];
         }
     }
 }
