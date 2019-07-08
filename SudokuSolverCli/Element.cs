@@ -1,6 +1,6 @@
 ﻿namespace SudokuSolverCli
 {
-    internal class Element
+    public class Element
     {
         private readonly string _name;
 

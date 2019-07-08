@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SudokuSolverCli
 {
-    internal class ElementSet : HashSet<Element>
+    public class ElementSet : HashSet<Element>
     {
         private ElementSet(IEnumerable<Element> collection) : base(collection)
         {
