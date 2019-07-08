@@ -6,8 +6,14 @@ namespace SudokuSolverCli
 {
     public class ElementSet : HashSet<Element>
     {
-        private ElementSet(IEnumerable<Element> collection) : base(collection)
+        public ElementSet(IEnumerable<Element> collection) : base(collection)
         {
+        }
+
+        public bool TryParse(string name, out Element element)
+        {
+            element = this.FirstOrDefault(element1 => element1.ToString() == name);
+            return element != default(Element);
         }
 
         public static ElementSet MakeElementSet(uint count)

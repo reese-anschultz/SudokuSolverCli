@@ -2,13 +2,18 @@
 {
     public class Cell
     {
-        private readonly ElementSet _completeElementSet;
-        private ElementSet currentElementSet;
+        private readonly ElementSet _currentElementSet;
+        public readonly ElementSet CompleteElementSet;
 
         public Cell(ElementSet completeElementSet)
         {
-            _completeElementSet = completeElementSet;
-            currentElementSet = _completeElementSet;
+            CompleteElementSet = completeElementSet;
+            _currentElementSet = CompleteElementSet;
+        }
+
+        public bool RemoveElements(ElementSet elements)
+        {
+            return _currentElementSet.RemoveWhere(elements.Contains) != 0;
         }
     }
 }
