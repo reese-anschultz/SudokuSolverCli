@@ -13,7 +13,10 @@ namespace SudokuSolverCli.UserRequestHandlers
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            Program.UserRequestHandlers.OrderBy(handler => handler.ToString()).ToList().ForEach(Console.WriteLine);
+            Program.UserRequestHandlers
+                .Where(handler => !string.IsNullOrEmpty(handler.ToString()))
+                .OrderBy(handler => handler.ToString())
+                .ToList().ForEach(Console.WriteLine);
         }
     }
 }
