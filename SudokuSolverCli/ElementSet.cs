@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -34,6 +35,14 @@ namespace SudokuSolverCli
         {
             element = this.FirstOrDefault(element1 => element1.ToString() == name);
             return element != default(Element);
+        }
+
+        public Element Parse(string name)
+        {
+            if(!TryParse(name,out var element))
+                throw new ArgumentException($"'{name}' not found in ElementSet",nameof(name));
+
+            return element;
         }
 
         public static ElementSet MakeElementSet(uint count)
@@ -130,7 +139,7 @@ namespace SudokuSolverCli
         {
             return new ElementSet(_immutableSetImplementation.Remove(value));
         }
-
+        
         public bool SetEquals(IEnumerable<Element> other)
         {
             return _immutableSetImplementation.SetEquals(other);
