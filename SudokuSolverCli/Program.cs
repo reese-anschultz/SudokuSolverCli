@@ -21,7 +21,7 @@ namespace SudokuSolverCli
             //same assembly as the Program class
             using (_container = new CompositionContainer(new AssemblyCatalog(typeof(Program).Assembly)))
             {
-                UserRequestHandlers = _container.GetExportedValues<UserRequestHandler>();
+                UserRequestHandlers = UserRequestHandler.ComposeUserRequestHandlers(_container);
                 HandleUserRequestsFromTextReader(Console.In);
             }
         }

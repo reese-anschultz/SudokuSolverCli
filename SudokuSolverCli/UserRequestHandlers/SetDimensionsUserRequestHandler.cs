@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    [Export(typeof(UserRequestHandler))]
     public class SetDimensionsUserRequestHandler : UserRequestHandler
     {
         public SetDimensionsUserRequestHandler() : base("dim")
@@ -33,6 +32,12 @@ namespace SudokuSolverCli.UserRequestHandlers
             }
 
             Program.Board = new Board(sizes[0], sizes[1]);
+        }
+
+        [Export(typeof(UserRequestHandlerFactory))]
+        public static UserRequestHandler SetDimensionsUserRequestHandlerFactory()
+        {
+            return new SetDimensionsUserRequestHandler();
         }
     }
 }

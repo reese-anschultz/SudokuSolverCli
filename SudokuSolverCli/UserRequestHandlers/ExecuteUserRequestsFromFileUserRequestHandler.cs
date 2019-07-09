@@ -4,7 +4,6 @@ using System.IO;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    [Export(typeof(UserRequestHandler))]
     internal class ExecuteUserRequestsFromFileUserRequestHandler : UserRequestHandler
     {
         public ExecuteUserRequestsFromFileUserRequestHandler() : base("execute")
@@ -24,6 +23,12 @@ namespace SudokuSolverCli.UserRequestHandlers
             {
                 Console.WriteLine(e);
             }
+        }
+
+        [Export(typeof(UserRequestHandlerFactory))]
+        public static UserRequestHandler ExecuteUserRequestsFromFileUserRequestHandlerFactory()
+        {
+            return new ExecuteUserRequestsFromFileUserRequestHandler();
         }
     }
 }

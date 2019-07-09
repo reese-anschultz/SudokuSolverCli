@@ -3,7 +3,6 @@ using System.ComponentModel.Composition;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    [Export(typeof(UserRequestHandler))]
     internal class UnhandledUserRequestHandler : UserRequestHandler
     {
         public UnhandledUserRequestHandler() : base("")
@@ -20,6 +19,12 @@ namespace SudokuSolverCli.UserRequestHandlers
         protected override void ReallyHandleRequest(UserRequest request)
         {
             Console.WriteLine($"Unknown command '{request.Command}'");
+        }
+
+        [Export(typeof(UserRequestHandlerFactory))]
+        public static UserRequestHandler UnhandledUserRequestHandlerFactory()
+        {
+            return new UnhandledUserRequestHandler();
         }
     }
 }

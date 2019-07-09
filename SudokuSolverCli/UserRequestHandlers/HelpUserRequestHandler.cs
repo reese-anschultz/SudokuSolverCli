@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    [Export(typeof(UserRequestHandler))]
     internal class HelpUserRequestHandler : UserRequestHandler
     {
         public HelpUserRequestHandler() : base("help")
@@ -17,6 +16,12 @@ namespace SudokuSolverCli.UserRequestHandlers
                 .Where(handler => !string.IsNullOrEmpty(handler.ToString()))
                 .OrderBy(handler => handler.ToString())
                 .ToList().ForEach(Console.WriteLine);
+        }
+
+        [Export(typeof(UserRequestHandlerFactory))]
+        public static UserRequestHandler HelpUserRequestHandlerFactory()
+        {
+            return new HelpUserRequestHandler();
         }
     }
 }

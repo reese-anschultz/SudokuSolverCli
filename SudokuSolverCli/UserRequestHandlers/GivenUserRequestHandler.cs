@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    [Export(typeof(UserRequestHandler))]
     internal class GivenUserRequestHandler : UserRequestHandler
     {
         public GivenUserRequestHandler() : base("given")
@@ -34,7 +33,7 @@ namespace SudokuSolverCli.UserRequestHandlers
             Element[] indexes;
             try
             {
-                indexes = indexesArguments.Select(indexName=>completeElementSet.Parse(indexName)).ToArray();
+                indexes = indexesArguments.Select(indexName => completeElementSet.Parse(indexName)).ToArray();
             }
             catch (ArgumentException e)
             {
@@ -49,6 +48,12 @@ namespace SudokuSolverCli.UserRequestHandlers
 
             }
             Program.Board.GetCell(indexes[0], indexes[1]).RemoveElements(completeElementSet.Remove(element));
+        }
+
+        [Export(typeof(UserRequestHandlerFactory))]
+        public static UserRequestHandler GivenUserRequestHandlerFactory()
+        {
+            return new GivenUserRequestHandler();
         }
     }
 }

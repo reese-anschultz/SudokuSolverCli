@@ -3,7 +3,6 @@ using System.ComponentModel.Composition;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    [Export(typeof(UserRequestHandler))]
     public class ElementsUserRequestHandler : UserRequestHandler
     {
         public ElementsUserRequestHandler() : base("elements")
@@ -13,6 +12,12 @@ namespace SudokuSolverCli.UserRequestHandlers
         protected override void ReallyHandleRequest(UserRequest request)
         {
             Console.WriteLine(string.Join(", ", Program.Board.CompleteElementSet));
+        }
+
+        [Export(typeof(UserRequestHandlerFactory))]
+        public static UserRequestHandler ElementsUserRequestHandlerFactory()
+        {
+            return new ElementsUserRequestHandler();
         }
     }
 }
