@@ -6,8 +6,11 @@ namespace SudokuSolverCli.UserRequestHandlers
 {
     internal class GivenUserRequestHandler : UserRequestHandler
     {
-        public GivenUserRequestHandler() : base("given")
+        private readonly Board _board;
+
+        private GivenUserRequestHandler(Board board) : base("given")
         {
+            _board = board;
         }
 
         protected override void ReallyHandleRequest(UserRequest request)
@@ -29,7 +32,7 @@ namespace SudokuSolverCli.UserRequestHandlers
                 return;
 
             }
-            var completeElementSet = Program.Board.CompleteElementSet;
+            var completeElementSet = _board.CompleteElementSet;
             Element[] indexes;
             try
             {
@@ -50,10 +53,10 @@ namespace SudokuSolverCli.UserRequestHandlers
             Program.Board.GetCell(indexes[0], indexes[1]).RemoveElements(completeElementSet.Remove(element));
         }
 
-        [Export(typeof(UserRequestHandlerFactory))]
-        public static UserRequestHandler GivenUserRequestHandlerFactory()
+        [Export(typeof(UserRequestHandlerFactory<Board>))]
+        public static UserRequestHandler GivenUserRequestHandlerFactory(Board board)
         {
-            return new GivenUserRequestHandler();
+            return new GivenUserRequestHandler(board);
         }
     }
 }
