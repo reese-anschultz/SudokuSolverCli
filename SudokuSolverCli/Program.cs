@@ -14,6 +14,7 @@ namespace SudokuSolverCli
         private static CompositionContainer _container;
         public static bool UserRequestedExit = false;
         public static Board Board = new Board(3, 3);
+        public static BoardView BoardView;
 
         public static void Main()
         {
@@ -23,6 +24,7 @@ namespace SudokuSolverCli
             {
                 UserRequestHandlers = UserRequestHandler.ComposeUserRequestHandlers(_container);
                 HandleUserRequestsFromTextReader(Console.In);
+                BoardView = new BoardView(_container, Board);
             }
         }
 
