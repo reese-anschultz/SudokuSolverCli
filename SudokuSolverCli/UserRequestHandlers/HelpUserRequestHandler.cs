@@ -6,22 +6,25 @@ namespace SudokuSolverCli.UserRequestHandlers
 {
     internal class HelpUserRequestHandler : UserRequestHandler
     {
-        private HelpUserRequestHandler() : base("help")
+        private readonly ApplicationView _applicationView;
+
+        private HelpUserRequestHandler(ApplicationView applicationView) : base("help")
         {
+            _applicationView = applicationView;
         }
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            Program.ApplicationView.UserRequestHandlers
+            _applicationView.UserRequestHandlers
                 .Where(handler => !string.IsNullOrEmpty(handler.ToString()))
                 .OrderBy(handler => handler.ToString())
                 .ToList().ForEach(Console.WriteLine);
         }
 
-        [Export(typeof(UserRequestHandlerFactory))]
-        public static UserRequestHandler HelpUserRequestHandlerFactory()
+        [Export(typeof(UserRequestHandlerFactory<ApplicationView>))]
+        public static UserRequestHandler HelpUserRequestHandlerFactory(ApplicationView applicationView)
         {
-            return new HelpUserRequestHandler();
+            return new HelpUserRequestHandler(applicationView);
         }
     }
 }

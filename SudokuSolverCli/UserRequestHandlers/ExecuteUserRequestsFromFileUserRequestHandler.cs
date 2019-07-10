@@ -6,8 +6,11 @@ namespace SudokuSolverCli.UserRequestHandlers
 {
     internal class ExecuteUserRequestsFromFileUserRequestHandler : UserRequestHandler
     {
-        public ExecuteUserRequestsFromFileUserRequestHandler() : base("execute")
+        private readonly ApplicationView _applicationView;
+
+        private ExecuteUserRequestsFromFileUserRequestHandler(ApplicationView applicationView) : base("execute")
         {
+            _applicationView = applicationView;
         }
 
         protected override void ReallyHandleRequest(UserRequest request)
@@ -16,7 +19,7 @@ namespace SudokuSolverCli.UserRequestHandlers
             {
                 using (var textReader = File.OpenText(request.Argument))
                 {
-                    Program.HandleUserRequestsFromTextReader(textReader);
+                    _applicationView.HandleUserRequestsFromTextReader(textReader);
                 }
             }
             catch (FileNotFoundException e)
@@ -25,10 +28,10 @@ namespace SudokuSolverCli.UserRequestHandlers
             }
         }
 
-        [Export(typeof(UserRequestHandlerFactory))]
-        public static UserRequestHandler ExecuteUserRequestsFromFileUserRequestHandlerFactory()
+        [Export(typeof(UserRequestHandlerFactory<ApplicationView>))]
+        public static UserRequestHandler ExecuteUserRequestsFromFileUserRequestHandlerFactory(ApplicationView applicationView)
         {
-            return new ExecuteUserRequestsFromFileUserRequestHandler();
+            return new ExecuteUserRequestsFromFileUserRequestHandler(applicationView);
         }
     }
 }

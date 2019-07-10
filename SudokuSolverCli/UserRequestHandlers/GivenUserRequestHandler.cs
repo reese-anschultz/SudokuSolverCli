@@ -50,7 +50,7 @@ namespace SudokuSolverCli.UserRequestHandlers
                 return;
 
             }
-            Program.Board.GetCell(indexes[0], indexes[1]).RemoveElements(completeElementSet.Remove(element));
+            _board.GetCell(indexes[0], indexes[1]).RemoveElements(completeElementSet.Remove(element));
         }
 
         [Export(typeof(UserRequestHandlerFactory<Board>))]

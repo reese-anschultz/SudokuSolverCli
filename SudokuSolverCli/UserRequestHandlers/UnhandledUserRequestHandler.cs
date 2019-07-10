@@ -5,7 +5,7 @@ namespace SudokuSolverCli.UserRequestHandlers
 {
     internal class UnhandledUserRequestHandler : UserRequestHandler
     {
-        public UnhandledUserRequestHandler() : base("")
+        private UnhandledUserRequestHandler(ApplicationView _) : base("")
         {
         }
 
@@ -21,10 +21,10 @@ namespace SudokuSolverCli.UserRequestHandlers
             Console.WriteLine($"Unknown command '{request.Command}'");
         }
 
-        [Export(typeof(UserRequestHandlerFactory))]
-        public static UserRequestHandler UnhandledUserRequestHandlerFactory()
+        [Export(typeof(UserRequestHandlerFactory<ApplicationView>))]
+        public static UserRequestHandler UnhandledUserRequestHandlerFactory(ApplicationView applicationView)
         {
-            return new UnhandledUserRequestHandler();
+            return new UnhandledUserRequestHandler(applicationView);
         }
     }
 }

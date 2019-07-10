@@ -6,8 +6,11 @@ namespace SudokuSolverCli.UserRequestHandlers
 {
     public class DimUserRequestHandler : UserRequestHandler
     {
-        private DimUserRequestHandler() : base("dim")
+        private readonly ApplicationView _applicationView;
+
+        private DimUserRequestHandler(ApplicationView applicationView) : base("dim")
         {
+            _applicationView = applicationView;
         }
 
         protected override void ReallyHandleRequest(UserRequest request)
@@ -31,13 +34,13 @@ namespace SudokuSolverCli.UserRequestHandlers
                 return;
             }
 
-            Program.Board = new Board(sizes[0], sizes[1]);
+            _applicationView.BoardView = new BoardView(_applicationView.Container, new Board(sizes[0], sizes[1]));
         }
 
-        [Export(typeof(UserRequestHandlerFactory))]
-        public static UserRequestHandler SetDimensionsUserRequestHandlerFactory()
+        [Export(typeof(UserRequestHandlerFactory<ApplicationView>))]
+        public static UserRequestHandler DimRequestHandlerFactory(ApplicationView applicationView)
         {
-            return new DimUserRequestHandler();
+            return new DimUserRequestHandler(applicationView);
         }
     }
 }
