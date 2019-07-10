@@ -10,11 +10,11 @@ namespace SudokuSolverCli
     [Export]
     internal class Program
     {
-        public static IEnumerable<UserRequestHandler> UserRequestHandlers;
-        private static CompositionContainer _container;
         public static bool UserRequestedExit = false;
-        public static Board Board = new Board(3, 3);
+        private static CompositionContainer _container;
+        public static Board Board;
         public static BoardView BoardView;
+        public static IEnumerable<UserRequestHandler> UserRequestHandlers;
 
         public static void Main()
         {
@@ -22,9 +22,10 @@ namespace SudokuSolverCli
             //same assembly as the Program class
             using (_container = new CompositionContainer(new AssemblyCatalog(typeof(Program).Assembly)))
             {
+                Board = new Board(3, 3);
+                BoardView = new BoardView(_container, Board);
                 UserRequestHandlers = UserRequestHandler.ComposeUserRequestHandlers(_container);
                 HandleUserRequestsFromTextReader(Console.In);
-                BoardView = new BoardView(_container, Board);
             }
         }
 
