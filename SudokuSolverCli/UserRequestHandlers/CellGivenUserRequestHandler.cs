@@ -21,7 +21,7 @@ namespace SudokuSolverCli.UserRequestHandlers
                 return;
 
             }
-            _cell.RemoveElements(completeElementSet.Remove(element));
+            _cell.RemoveElements(completeElementSet.Remove(element), $"given {element}");
         }
 
         [Export(typeof(UserRequestHandlerFactory<Cell>))]
