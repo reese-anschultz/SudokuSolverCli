@@ -14,12 +14,11 @@ namespace SudokuSolverCli.UserRequestHandlers
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            Console.WriteLine("Complete: " + string.Join(", ", _cell.CompleteElementSet));
             Console.WriteLine("Current: " + string.Join(", ", _cell.CurrentElementSet));
         }
 
         [Export(typeof(UserRequestHandlerFactory<Cell>))]
-        public static UserRequestHandler BoardHelpUserRequestHandlerFactory(Cell cell)
+        public static UserRequestHandler BoardPrintUserRequestHandlerFactory(Cell cell)
         {
             return new CellPrintUserRequestHandler(cell);
         }
