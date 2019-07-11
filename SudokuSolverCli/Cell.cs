@@ -7,11 +7,13 @@ namespace SudokuSolverCli
         public readonly ElementSet CompleteElementSet;
         public ElementSet CurrentElementSet { get; private set; }
         public List<Change> Changes = new List<Change>();
+        public (Element column, Element row) Location;
 
-        public Cell(ElementSet completeElementSet)
+        public Cell((Element column, Element row) location, ElementSet completeElementSet)
         {
             CompleteElementSet = completeElementSet;
             CurrentElementSet = CompleteElementSet;
+            Location = location;
         }
 
         public bool RemoveElements(ElementSet elements, string why)

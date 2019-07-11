@@ -14,7 +14,7 @@ namespace SudokuSolverCli.UserRequestHandlers
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            Console.WriteLine("Current: " + string.Join(", ", _cell.CurrentElementSet));
+            Console.WriteLine($"({_cell.Location.column},{_cell.Location.row}): {string.Join(", ", _cell.CurrentElementSet)}");
         }
 
         [Export(typeof(UserRequestHandlerFactory<Cell>))]

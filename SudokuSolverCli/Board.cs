@@ -14,7 +14,10 @@ namespace SudokuSolverCli
             CompleteElementSet = ElementSet.MakeElementSet(width * height);
             foreach (var columnElement in CompleteElementSet)
                 foreach (var rowElement in CompleteElementSet)
-                    _cells[(columnElement, rowElement)] = new Cell(CompleteElementSet);
+                {
+                    var location = (columnElement, rowElement);
+                    _cells[location] = new Cell(location, CompleteElementSet);
+                }
         }
 
         public Cell GetCell(Element column, Element row)
