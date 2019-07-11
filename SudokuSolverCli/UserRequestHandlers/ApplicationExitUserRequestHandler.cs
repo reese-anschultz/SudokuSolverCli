@@ -2,9 +2,9 @@
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    internal class ExitUserRequestHandler : UserRequestHandler
+    internal class ApplicationExitUserRequestHandler : UserRequestHandler
     {
-        public ExitUserRequestHandler() : base("exit")
+        public ApplicationExitUserRequestHandler() : base("exit")
         {
         }
 
@@ -16,7 +16,7 @@ namespace SudokuSolverCli.UserRequestHandlers
         [Export(typeof(UserRequestHandlerFactory))]
         public static UserRequestHandler ExitUserRequestHandlerFactory()
         {
-            return new ExitUserRequestHandler();
+            return new ApplicationExitUserRequestHandler();
         }
     }
 }

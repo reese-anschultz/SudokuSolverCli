@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    internal class HelpUserRequestHandler : UserRequestHandler
+    internal class ApplicationHelpUserRequestHandler : UserRequestHandler
     {
         private readonly ApplicationView _applicationView;
 
-        private HelpUserRequestHandler(ApplicationView applicationView) : base("help")
+        private ApplicationHelpUserRequestHandler(ApplicationView applicationView) : base("help")
         {
             _applicationView = applicationView;
         }
@@ -24,7 +24,7 @@ namespace SudokuSolverCli.UserRequestHandlers
         [Export(typeof(UserRequestHandlerFactory<ApplicationView>))]
         public static UserRequestHandler HelpUserRequestHandlerFactory(ApplicationView applicationView)
         {
-            return new HelpUserRequestHandler(applicationView);
+            return new ApplicationHelpUserRequestHandler(applicationView);
         }
     }
 }

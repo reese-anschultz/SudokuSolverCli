@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    internal class GivenUserRequestHandler : UserRequestHandler
+    internal class BoardGivenUserRequestHandler : UserRequestHandler
     {
         private readonly Board _board;
 
-        private GivenUserRequestHandler(Board board) : base("given")
+        private BoardGivenUserRequestHandler(Board board) : base("given")
         {
             _board = board;
         }
@@ -56,7 +56,7 @@ namespace SudokuSolverCli.UserRequestHandlers
         [Export(typeof(UserRequestHandlerFactory<Board>))]
         public static UserRequestHandler GivenUserRequestHandlerFactory(Board board)
         {
-            return new GivenUserRequestHandler(board);
+            return new BoardGivenUserRequestHandler(board);
         }
     }
 }

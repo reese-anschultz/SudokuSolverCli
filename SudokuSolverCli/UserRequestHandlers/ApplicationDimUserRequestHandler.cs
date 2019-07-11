@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    public class DimUserRequestHandler : UserRequestHandler
+    public class ApplicationDimUserRequestHandler : UserRequestHandler
     {
         private readonly ApplicationView _applicationView;
 
-        private DimUserRequestHandler(ApplicationView applicationView) : base("dim")
+        private ApplicationDimUserRequestHandler(ApplicationView applicationView) : base("dim")
         {
             _applicationView = applicationView;
         }
@@ -40,7 +40,7 @@ namespace SudokuSolverCli.UserRequestHandlers
         [Export(typeof(UserRequestHandlerFactory<ApplicationView>))]
         public static UserRequestHandler DimRequestHandlerFactory(ApplicationView applicationView)
         {
-            return new DimUserRequestHandler(applicationView);
+            return new ApplicationDimUserRequestHandler(applicationView);
         }
     }
 }

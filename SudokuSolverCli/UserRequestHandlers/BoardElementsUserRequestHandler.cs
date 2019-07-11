@@ -3,11 +3,11 @@ using System.ComponentModel.Composition;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    public class ElementsUserRequestHandler : UserRequestHandler
+    public class BoardElementsUserRequestHandler : UserRequestHandler
     {
         private readonly Board _board;
 
-        private ElementsUserRequestHandler(Board board) : base("elements")
+        private BoardElementsUserRequestHandler(Board board) : base("elements")
         {
             _board = board;
         }
@@ -20,7 +20,7 @@ namespace SudokuSolverCli.UserRequestHandlers
         [Export(typeof(UserRequestHandlerFactory<Board>))]
         public static UserRequestHandler ElementsUserRequestHandlerFactory(Board board)
         {
-            return new ElementsUserRequestHandler(board);
+            return new BoardElementsUserRequestHandler(board);
         }
     }
 }

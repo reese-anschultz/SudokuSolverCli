@@ -3,9 +3,9 @@ using System.ComponentModel.Composition;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    internal class UnhandledUserRequestHandler : UserRequestHandler
+    internal class ApplicationUnhandledUserRequestHandler : UserRequestHandler
     {
-        private UnhandledUserRequestHandler(ApplicationView _) : base("")
+        private ApplicationUnhandledUserRequestHandler(ApplicationView _) : base("")
         {
         }
 
@@ -24,7 +24,7 @@ namespace SudokuSolverCli.UserRequestHandlers
         [Export(typeof(UserRequestHandlerFactory<ApplicationView>))]
         public static UserRequestHandler UnhandledUserRequestHandlerFactory(ApplicationView applicationView)
         {
-            return new UnhandledUserRequestHandler(applicationView);
+            return new ApplicationUnhandledUserRequestHandler(applicationView);
         }
     }
 }
