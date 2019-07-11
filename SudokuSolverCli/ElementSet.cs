@@ -21,6 +21,11 @@ namespace SudokuSolverCli
 
         public int Count => _immutableSetImplementation.Count;
 
+        public override string ToString()
+        {
+            return string.Join(", ", _immutableSetImplementation);
+        }
+
         public IEnumerator<Element> GetEnumerator()
         {
             return _immutableSetImplementation.GetEnumerator();
@@ -28,7 +33,7 @@ namespace SudokuSolverCli
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable) _immutableSetImplementation).GetEnumerator();
+            return ((IEnumerable)_immutableSetImplementation).GetEnumerator();
         }
 
         public bool TryParse(string name, out Element element)
@@ -39,8 +44,8 @@ namespace SudokuSolverCli
 
         public Element Parse(string name)
         {
-            if(!TryParse(name,out var element))
-                throw new ArgumentException($"'{name}' not found in ElementSet",nameof(name));
+            if (!TryParse(name, out var element))
+                throw new ArgumentException($"'{name}' not found in ElementSet", nameof(name));
 
             return element;
         }
@@ -139,7 +144,7 @@ namespace SudokuSolverCli
         {
             return new ElementSet(_immutableSetImplementation.Remove(value));
         }
-        
+
         public bool SetEquals(IEnumerable<Element> other)
         {
             return _immutableSetImplementation.SetEquals(other);
