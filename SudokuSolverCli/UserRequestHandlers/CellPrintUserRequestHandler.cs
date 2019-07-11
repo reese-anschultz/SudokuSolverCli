@@ -18,7 +18,7 @@ namespace SudokuSolverCli.UserRequestHandlers
         }
 
         [Export(typeof(UserRequestHandlerFactory<Cell>))]
-        public static UserRequestHandler BoardPrintUserRequestHandlerFactory(Cell cell)
+        public static UserRequestHandler CellPrintUserRequestHandlerFactory(Cell cell)
         {
             return new CellPrintUserRequestHandler(cell);
         }
