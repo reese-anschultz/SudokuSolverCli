@@ -20,6 +20,13 @@ namespace SudokuSolverCli.UserRequestHandlers
                     .CompleteElementSet
                     .Select(columnElement => _board.GetCell(columnElement, rowElement))
                     .Select(cell => (cell.CurrentElementSet.Count == 1 ? cell.CurrentElementSet.Single().ToString() : "."))));
+
+            Console.WriteLine("---");
+            foreach (var cell in _board.GetArea(_board.CompleteElementSet.First()))
+                Console.WriteLine(cell.Location);
+            Console.WriteLine("---");
+            foreach (var cell in _board.GetArea(_board.CompleteElementSet.Last()))
+                Console.WriteLine(cell.Location);
         }
 
         [Export(typeof(UserRequestHandlerFactory<Board>))]
