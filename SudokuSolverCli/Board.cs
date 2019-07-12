@@ -42,30 +42,28 @@ namespace SudokuSolverCli
             return CompleteElementSet.Select(row => _cells[(column, row)]);
         }
 
-        private IEnumerable<Element> AreaColumnElements(Element area)
+        private IEnumerable<(Element column, Element row)> AreaLocations(Element area)
         {
             var elementIndex = (uint)CompleteElementSet.ToList().IndexOf(area);
-            return CompleteElementSet.Skip((int)(elementIndex % _width)).Take((int)_width);
-        }
-
-        private IEnumerable<Element> AreaRowElements(Element area)
-        {
-            var elementIndex = (uint)CompleteElementSet.ToList().IndexOf(area);
-            return CompleteElementSet.Skip((int)(elementIndex / _width * _width)).Take((int)_height);
+            var areaColumns = _height;
+            var areaRow = Math.DivRem(elementIndex, areaColumns, out var areaColumn);
+            var firstColumn = (uint)(areaColumn * _width);
+            var firstRow = (uint)(areaRow * _height);
+            var columns = CompleteElementSet.Skip((int)firstColumn).Take((int)_width);
+            var rows = CompleteElementSet.Skip((int)firstRow).Take((int)_height);
+            return columns.SelectMany(column => rows.Select(row => (column, row)));
         }
 
         public IEnumerable<Cell> GetArea(Element area)
         {
-            return AreaColumnElements(area)
-                .SelectMany(areaColumn => AreaRowElements(area)
-                    .Select(areaRow => (areaColumn, areaRow)))
-                .Select(location => _cells[location]);
+            return AreaLocations(area).Select(location => _cells[location]);
         }
 
         public IEnumerable<IEnumerable<Cell>> GetColumns()
         {
             return CompleteElementSet.Select(GetColumn);
         }
+
         public IEnumerable<IEnumerable<Cell>> GetRows()
         {
             return CompleteElementSet.Select(GetRow);
