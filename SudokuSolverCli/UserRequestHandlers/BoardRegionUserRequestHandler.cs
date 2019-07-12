@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.Linq;
+using SudokuSolverCli.Views;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SudokuSolverCli
+namespace SudokuSolverCli.Views
 {
     public class BoardView : View
     {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 
-namespace SudokuSolverCli
+namespace SudokuSolverCli.Views
 {
     public class CellView : View
     {

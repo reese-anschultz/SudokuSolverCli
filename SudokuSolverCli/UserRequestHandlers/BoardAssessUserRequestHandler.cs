@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using SudokuSolverCli.Views;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
