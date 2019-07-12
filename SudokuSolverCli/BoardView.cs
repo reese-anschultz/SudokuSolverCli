@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SudokuSolverCli
 {
@@ -19,6 +20,12 @@ namespace SudokuSolverCli
         public CellView GetCellView(Element column, Element row)
         {
             return new CellView(Container, _board.GetCell(column, row));
+        }
+
+        public RegionView GetRegionView(string pattern)
+        {
+            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            return new RegionView(Container, _board.GetRegions().Single(region => regex.IsMatch(region.Name)));
         }
     }
 }

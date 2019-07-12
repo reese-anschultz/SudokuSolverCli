@@ -32,14 +32,19 @@ namespace SudokuSolverCli
             return _cells[(column, row)];
         }
 
-        public IEnumerable<Cell> GetColumn(Element row)
+        public IEnumerable<Region> GetRegions()
         {
-            return CompleteElementSet.Select(column => _cells[(column, row)]);
+            return GetAreas().Concat(GetColumns()).Concat(GetRows());
         }
 
-        public IEnumerable<Cell> GetRow(Element column)
+        private Region GetColumn(Element row)
         {
-            return CompleteElementSet.Select(row => _cells[(column, row)]);
+            return new Region($"Row {row}", CompleteElementSet.Select(column => _cells[(column, row)]));
+        }
+
+        private Region GetRow(Element column)
+        {
+            return new Region($"Column {column}", CompleteElementSet.Select(row => _cells[(column, row)]));
         }
 
         private IEnumerable<(Element column, Element row)> AreaLocations(Element area)
@@ -51,25 +56,25 @@ namespace SudokuSolverCli
             var firstRow = (uint)(areaRow * _height);
             var columns = CompleteElementSet.Skip((int)firstColumn).Take((int)_width);
             var rows = CompleteElementSet.Skip((int)firstRow).Take((int)_height);
-            return columns.SelectMany(column => rows.Select(row => (column, row)));
+            return rows.SelectMany(row => columns.Select(column => (column, row)));
         }
 
-        public IEnumerable<Cell> GetArea(Element area)
+        private Region GetArea(Element area)
         {
-            return AreaLocations(area).Select(location => _cells[location]);
+            return new Region($"Area {area}", AreaLocations(area).Select(location => _cells[location]));
         }
 
-        public IEnumerable<IEnumerable<Cell>> GetColumns()
+        private IEnumerable<Region> GetColumns()
         {
             return CompleteElementSet.Select(GetColumn);
         }
 
-        public IEnumerable<IEnumerable<Cell>> GetRows()
+        private IEnumerable<Region> GetRows()
         {
             return CompleteElementSet.Select(GetRow);
         }
 
-        public IEnumerable<IEnumerable<Cell>> GetAreas()
+        private IEnumerable<Region> GetAreas()
         {
             return CompleteElementSet.Select(GetArea);
         }
