@@ -7,7 +7,9 @@ namespace SudokuSolverCli.Views
     {
         public RegionView(CompositionContainer container, Region region)
         {
-            UserRequestHandlers = UserRequestHandler.ComposeUserRequestHandlers(container, this).Concat(UserRequestHandler.ComposeUserRequestHandlers(container, region));
+            UserRequestHandlers = UserRequestHandler.ComposeUserRequestHandlers(container, this)
+                .Concat(UserRequestHandler.ComposeUserRequestHandlers(container, region)
+                .Concat(UserRequestHandler.ComposeUserRequestHandlers(container, region, container)));
         }
     }
 }
