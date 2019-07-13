@@ -15,7 +15,10 @@ namespace SudokuSolverCli.UserRequestHandlers
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            _region.Cells.Select(cell => cell.CurrentElementSet).ToList().ForEach(Console.WriteLine);
+            _region.Cells
+                .Select(cell => $"{cell.Location}: {cell.CurrentElementSet}")
+                .ToList()
+                .ForEach(Console.WriteLine);
         }
 
         [Export(typeof(UserRequestHandlerFactory<Region>))]
