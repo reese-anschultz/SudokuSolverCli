@@ -7,14 +7,16 @@ namespace SudokuSolverCli.Views
     public class BoardView : View
     {
         private readonly Board _board;
-        public CompositionContainer Container { get; }
+        private CompositionContainer Container { get; }
         public ElementSet CompleteElementSet => _board.CompleteElementSet;
 
         public BoardView(CompositionContainer container, Board board)
         {
             _board = board;
             Container = container;
-            UserRequestHandlers = UserRequestHandler.ComposeUserRequestHandlers(container, this).Concat(UserRequestHandler.ComposeUserRequestHandlers(container, board));
+            UserRequestHandlers = UserRequestHandler.ComposeUserRequestHandlers(container, this)
+                .Concat(UserRequestHandler.ComposeUserRequestHandlers(container, board))
+                .Concat(UserRequestHandler.ComposeUserRequestHandlers(container, board, container));
         }
 
         public CellView GetCellView(Element column, Element row)

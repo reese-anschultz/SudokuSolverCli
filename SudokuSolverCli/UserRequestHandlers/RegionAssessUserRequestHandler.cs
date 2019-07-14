@@ -21,16 +21,10 @@ namespace SudokuSolverCli.UserRequestHandlers
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            var changedCells = Enumerable.Empty<Cell>();
-            var regionAssessors = _container.GetExportedValues<RegionAssessor>();
-            var firstUsefulAssessor = regionAssessors.FirstOrDefault(assessor => assessor(_region, out changedCells));
-            if (firstUsefulAssessor == default(RegionAssessor))
-            {
-                Console.WriteLine("Nothing");
-                return;
-
-            }
-            Console.WriteLine($"Changed {string.Join(", ", changedCells.Select(cell => cell.Location))}");
+            var firstUsefulAssessor = _region.FirstOrDefaultAssessor(_container, out var changedCells);
+            Console.WriteLine(firstUsefulAssessor == default(RegionAssessor)
+                ? "Nothing"
+                : $"Changed {string.Join(", ", changedCells.Select(cell => cell.Location))}");
         }
 
         [Export(typeof(UserRequestHandlerFactory<Region, CompositionContainer>))]
