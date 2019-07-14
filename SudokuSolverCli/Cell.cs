@@ -6,7 +6,7 @@ namespace SudokuSolverCli
     {
         public readonly ElementSet CompleteElementSet;
         public ElementSet CurrentElementSet { get; private set; }
-        public List<Change> Changes = new List<Change>();
+        public readonly List<Change> Changes = new List<Change>();
         public (Element column, Element row) Location;
 
         public Cell((Element column, Element row) location, ElementSet completeElementSet)
@@ -24,6 +24,12 @@ namespace SudokuSolverCli
                 return false;
             Changes.Add(new Change(elements, CurrentElementSet, why));
             return true;
+        }
+
+        public void Reset()
+        {
+            CurrentElementSet = CompleteElementSet;
+            Changes.Add(new Change(CurrentElementSet.Remove(CurrentElementSet), CurrentElementSet, "Reset"));
         }
     }
 }
