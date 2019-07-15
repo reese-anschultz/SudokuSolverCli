@@ -15,11 +15,7 @@ namespace SudokuSolverCli.UserRequestHandlers
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            _cell.Changes.ToList().ForEach(change =>
-            {
-                Console.WriteLine($"Removed {change.RemovedElements} to get {change.ResultingElements}");
-                Console.WriteLine($" because {change.Why}");
-            });
+            _cell.Changes.ToList().ForEach(Console.WriteLine);
         }
 
         [Export(typeof(UserRequestHandlerFactory<Cell>))]

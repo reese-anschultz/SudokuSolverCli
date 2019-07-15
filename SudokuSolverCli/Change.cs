@@ -2,15 +2,21 @@
 {
     public class Change
     {
-        public readonly ElementSet RemovedElements;
-        public readonly ElementSet ResultingElements;
-        public readonly string Why;
+        private readonly Cell _cell;
+        private readonly ElementSet _removedElements;
+        private readonly ElementSet _resultingElements;
+        private readonly string _why;
 
-        public Change(ElementSet removedElements, ElementSet resultingElements, string why)
+        public Change(Cell cell, ElementSet removedElements, ElementSet resultingElements, string why)
         {
-            RemovedElements = removedElements;
-            ResultingElements = resultingElements;
-            Why = why;
+            _cell = cell;
+            _removedElements = removedElements;
+            _resultingElements = resultingElements;
+            _why = why;
+        }
+        public override string ToString()
+        {
+            return $"{_cell.Location}: removed {_removedElements} to get {_resultingElements} because {_why}";
         }
     }
 }

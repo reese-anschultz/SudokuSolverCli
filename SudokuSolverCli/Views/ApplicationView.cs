@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition.Hosting;
+﻿using System.Collections.Generic;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 
@@ -6,6 +7,9 @@ namespace SudokuSolverCli.Views
 {
     public class ApplicationView : View
     {
+        public static IList<Change> AllChanges = new List<Change>();
+        public static IList<Change> AllFinalChanges = new List<Change>();
+
         public CompositionContainer Container { get; }
         public BoardView BoardView = null;
 

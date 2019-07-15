@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SudokuSolverCli.Views;
 
 namespace SudokuSolverCli
 {
@@ -22,14 +23,20 @@ namespace SudokuSolverCli
             CurrentElementSet = originalElementSet.Remove(elements);
             if (originalElementSet.SetEquals(CurrentElementSet))
                 return false;
-            Changes.Add(new Change(elements, CurrentElementSet, why));
+
+            var removedElementSet = originalElementSet.Remove(CurrentElementSet);
+            var change = new Change(this, removedElementSet, CurrentElementSet, why);
+            Changes.Add(change);
+            ApplicationView.AllChanges.Add(change);
+            if (CurrentElementSet.Count == 1)
+                ApplicationView.AllFinalChanges.Add(change);
             return true;
         }
 
         public void Reset()
         {
             CurrentElementSet = CompleteElementSet;
-            Changes.Add(new Change(CurrentElementSet.Remove(CurrentElementSet), CurrentElementSet, "Reset"));
+            Changes.Add(new Change(this, CurrentElementSet.Remove(CurrentElementSet), CurrentElementSet, "Reset"));
         }
     }
 }
