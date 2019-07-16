@@ -7,9 +7,11 @@ using System.Linq;
 
 namespace SudokuSolverCli
 {
-    public class ElementSet : IEnumerable<Element>
+    public class ElementSet : IEnumerable<Element>, IEquatable<ElementSet>
     {
         private readonly IImmutableSet<Element> _immutableSetImplementation;
+
+        public int Count => _immutableSetImplementation.Count;
 
         public ElementSet(IEnumerable<Element> collection)
         {
@@ -19,7 +21,65 @@ namespace SudokuSolverCli
                 _immutableSetImplementation = ImmutableSortedSet.CreateRange(collection);
         }
 
-        public int Count => _immutableSetImplementation.Count;
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ElementSet);
+        }
+
+        public bool Equals(ElementSet other)
+        {
+            // If parameter is null, return false.
+            if (other is null)
+            {
+                return false;
+            }
+
+            // Optimization for a common success case.
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            // If run-time types are not exactly the same, return false.
+            if (GetType() != other.GetType())
+            {
+                return false;
+            }
+
+            // If I can remove all items of other from this and have nothing left
+            // over, and, remove all items of this from other and have nothing
+            // left over, then they must contain the same items.
+            return this.Remove(other)._immutableSetImplementation.Count == 0
+                   && other.Remove(this)._immutableSetImplementation.Count == 0;
+        }
+
+        public static bool operator ==(ElementSet lhs, ElementSet rhs)
+        {
+            // Check for null on left side.
+            if (lhs is null)
+            {
+                return rhs is null; // null == null = true.
+            }
+            // Equals handles case of null on right side.
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator !=(ElementSet lhs, ElementSet rhs)
+        {
+            return !(lhs == rhs);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                // Choose large primes to avoid hashing collisions
+                const int hashingBase = (int)2166136261;
+                const int hashingMultiplier = 16777619;
+                return _immutableSetImplementation.Aggregate(hashingBase,
+                    (aggregate, element) => (aggregate * hashingMultiplier) ^ element.ToString().GetHashCode());
+            }
+        }
 
         public override string ToString()
         {
