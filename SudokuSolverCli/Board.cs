@@ -34,7 +34,7 @@ namespace SudokuSolverCli
 
         public IEnumerable<Region> GetRegions()
         {
-            return GetAreas().Concat(GetColumns()).Concat(GetRows());
+            return GetColumns().Concat(GetRows()).Concat(GetAreas());
         }
 
         private Region GetColumn(Element row)
