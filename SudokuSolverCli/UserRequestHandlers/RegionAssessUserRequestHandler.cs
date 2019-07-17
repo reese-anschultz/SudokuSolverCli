@@ -24,7 +24,7 @@ namespace SudokuSolverCli.UserRequestHandlers
             var firstUsefulAssessor = _region.FirstOrDefaultAssessor(_container, out var changedCells);
             Console.WriteLine(firstUsefulAssessor == default(RegionAssessor)
                 ? "Nothing"
-                : $"Changed {string.Join(", ", changedCells.Select(cell => cell.Location))}");
+                : $"{firstUsefulAssessor.GetType().Name}: Changed {string.Join(", ", changedCells.Select(cell => cell.Location))}");
         }
 
         [Export(typeof(UserRequestHandlerFactory<Region, CompositionContainer>))]
