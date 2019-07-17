@@ -19,6 +19,9 @@
     <None Update="UserRequestFiles\NestedUserRequest.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="UserRequestFiles\WebSudoku-Evil-7686589803.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
