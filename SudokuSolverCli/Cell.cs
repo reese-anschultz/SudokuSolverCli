@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SudokuSolverCli.Views;
 
 namespace SudokuSolverCli
 {
-    public class Cell
+    public class Cell : IEquatable<Cell>
     {
         public readonly ElementSet CompleteElementSet;
         public ElementSet CurrentElementSet { get; private set; }
         public readonly List<Change> Changes = new List<Change>();
-        public (Element column, Element row) Location;
+        public readonly (Element column, Element row) Location;
 
         public Cell((Element column, Element row) location, ElementSet completeElementSet)
         {
@@ -37,6 +38,55 @@ namespace SudokuSolverCli
         {
             CurrentElementSet = CompleteElementSet;
             Changes.Add(new Change(this, CurrentElementSet.Remove(CurrentElementSet), CurrentElementSet, "Reset"));
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Cell);
+        }
+
+        public bool Equals(Cell other)
+        {
+            // If parameter is null, return false.
+            if (other is null)
+            {
+                return false;
+            }
+
+            // Optimization for a common success case.
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            // If run-time types are not exactly the same, return false.
+            if (GetType() != other.GetType())
+            {
+                return false;
+            }
+
+            return Location.Equals(other.Location);
+        }
+
+        public static bool operator ==(Cell lhs, Cell rhs)
+        {
+            // Check for null on left side.
+            if (lhs is null)
+            {
+                return rhs is null; // null == null = true.
+            }
+            // Equals handles case of null on right side.
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator !=(Cell lhs, Cell rhs)
+        {
+            return !(lhs == rhs);
+        }
+
+        public override int GetHashCode()
+        {
+            return Location.GetHashCode();
         }
     }
 }
