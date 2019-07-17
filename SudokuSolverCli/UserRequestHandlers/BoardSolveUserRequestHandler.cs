@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using SudokuSolverCli.Assessors.Commands;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
@@ -21,6 +22,7 @@ namespace SudokuSolverCli.UserRequestHandlers
                        region.FirstOrDefaultAssessor(_container, out var _) != null) != null)
             {
             }
+            new BoardPrintCommand(_board).Execute();
         }
 
         [Export(typeof(UserRequestHandlerFactory<Board, CompositionContainer>))]

@@ -1,25 +1,20 @@
-﻿using System;
-using System.ComponentModel.Composition;
-using System.Linq;
+﻿using System.ComponentModel.Composition;
+using SudokuSolverCli.Assessors.Commands;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
     public class BoardPrintUserRequestHandler : UserRequestHandler
     {
-        private readonly Board _board;
+        private readonly Command _boardPrintCommand;
 
         private BoardPrintUserRequestHandler(Board board) : base("print")
         {
-            _board = board;
+            _boardPrintCommand = new BoardPrintCommand(board);
         }
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            foreach (var rowElement in _board.CompleteElementSet)
-                Console.WriteLine(string.Join(" ", _board
-                    .CompleteElementSet
-                    .Select(columnElement => _board.GetCell(columnElement, rowElement))
-                    .Select(cell => (cell.CurrentElementSet.Count == 1 ? cell.CurrentElementSet.Single().ToString() : "."))));
+            _boardPrintCommand.Execute();
         }
 
         [Export(typeof(UserRequestHandlerFactory<Board>))]
