@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
@@ -7,6 +8,8 @@ namespace SudokuSolverCli.UserRequestHandlers
 {
     public class BoardAssessUserRequestHandler : UserRequestHandler
     {
+        public delegate bool OverlappedRegionsAssessor(OverlappedRegions overlappedRegions, out IEnumerable<Cell> changedCells);
+
         private readonly Board _board;
         private readonly CompositionContainer _container;
 
@@ -18,15 +21,14 @@ namespace SudokuSolverCli.UserRequestHandlers
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            var changedCells = Enumerable.Empty<Cell>();
-            var changedRegion = _board.GetRegions().FirstOrDefault(region => region.FirstOrDefaultAssessor(_container, out changedCells) != null);
-            if (changedRegion == null)
+            var firstUsefulAssessor = _board.FirstOrDefaultAssessorName(_container, out var changedCells);
+            if (!string.IsNullOrEmpty(firstUsefulAssessor))
             {
-                Console.WriteLine("Nothing");
+                Console.WriteLine($"{firstUsefulAssessor}: Changed {string.Join(", ", changedCells.Select(cell => cell.Location))}");
                 return;
 
             }
-            Console.WriteLine($"Changed {changedRegion.Name}: {string.Join(", ", changedCells.Select(cell => cell.Location))}");
+            Console.WriteLine("Nothing");
         }
 
 

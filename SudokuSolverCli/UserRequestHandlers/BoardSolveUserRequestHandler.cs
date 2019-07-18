@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Linq;
 using SudokuSolverCli.Assessors.Commands;
 
 namespace SudokuSolverCli.UserRequestHandlers
@@ -18,8 +17,7 @@ namespace SudokuSolverCli.UserRequestHandlers
 
         protected override void ReallyHandleRequest(UserRequest request)
         {
-            while (_board.GetRegions().FirstOrDefault(region =>
-                       region.FirstOrDefaultAssessor(_container, out var _) != null) != null)
+            while (!string.IsNullOrEmpty(_board.FirstOrDefaultAssessorName(_container, out _)))
             {
             }
             new BoardPrintCommand(_board).Execute();

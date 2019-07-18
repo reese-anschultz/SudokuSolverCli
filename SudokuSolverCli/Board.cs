@@ -64,17 +64,17 @@ namespace SudokuSolverCli
             return new Region($"Area {area}", AreaLocations(area).Select(location => _cells[location]));
         }
 
-        private IEnumerable<Region> GetColumns()
+        public IEnumerable<Region> GetColumns()
         {
             return CompleteElementSet.Select(GetColumn);
         }
 
-        private IEnumerable<Region> GetRows()
+        public IEnumerable<Region> GetRows()
         {
             return CompleteElementSet.Select(GetRow);
         }
 
-        private IEnumerable<Region> GetAreas()
+        public IEnumerable<Region> GetAreas()
         {
             return CompleteElementSet.Select(GetArea);
         }
