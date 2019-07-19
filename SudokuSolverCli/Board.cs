@@ -37,12 +37,12 @@ namespace SudokuSolverCli
             return GetColumns().Concat(GetRows()).Concat(GetAreas());
         }
 
-        private Region GetColumn(Element row)
+        private Region GetRow(Element row)
         {
             return new Region($"Row {row}", CompleteElementSet.Select(column => _cells[(column, row)]));
         }
 
-        private Region GetRow(Element column)
+        private Region GetColumn(Element column)
         {
             return new Region($"Column {column}", CompleteElementSet.Select(row => _cells[(column, row)]));
         }
