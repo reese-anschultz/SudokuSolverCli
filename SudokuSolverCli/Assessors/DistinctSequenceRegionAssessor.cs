@@ -1,7 +1,7 @@
-﻿using SudokuSolverCli.UserRequestHandlers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using SudokuSolverCli.UserRequestHandlers;
 
 namespace SudokuSolverCli.Assessors
 {
@@ -10,18 +10,18 @@ namespace SudokuSolverCli.Assessors
         [Export(typeof(RegionAssessUserRequestHandler.RegionAssessor))]
         public static bool TheDistinctSequence(Region region, out IEnumerable<Cell> changedCells)
         {
-            var cellsByElements = new Dictionary<ElementSet, IList<Cell>>();
+            var cellsByElementSets = new Dictionary<ElementSet, IList<Cell>>();
             region.Cells.ToList().ForEach(cell =>
             {
                 var elementSet = cell.CurrentElementSet;
-                if (!cellsByElements.TryGetValue(elementSet, out var listCells))
+                if (!cellsByElementSets.TryGetValue(elementSet, out var listCells))
                 {
                     listCells = new List<Cell>();
-                    cellsByElements.Add(elementSet, listCells);
+                    cellsByElementSets.Add(elementSet, listCells);
                 }
                 listCells.Add(cell);
             });
-            foreach (var elementSetAndListCells in cellsByElements)
+            foreach (var elementSetAndListCells in cellsByElementSets)
             {
                 var (elementSet, listCells) = elementSetAndListCells;
                 if (elementSet.Count != listCells.Count) continue;
