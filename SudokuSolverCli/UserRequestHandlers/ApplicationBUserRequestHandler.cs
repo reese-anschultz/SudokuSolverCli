@@ -4,11 +4,11 @@ using System.ComponentModel.Composition;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {
-    public class BoardUserRequestHandler : UserRequestHandler
+    public class BUserRequestHandler : UserRequestHandler
     {
         private readonly ApplicationView _applicationView;
 
-        private BoardUserRequestHandler(ApplicationView applicationView) : base("board")
+        private BUserRequestHandler(ApplicationView applicationView) : base("b")
         {
             _applicationView = applicationView;
         }
@@ -21,7 +21,7 @@ namespace SudokuSolverCli.UserRequestHandlers
         [Export(typeof(UserRequestHandlerFactory<ApplicationView>))]
         public static UserRequestHandler BoardUserRequestHandlerFactory(ApplicationView applicationView)
         {
-            return new BoardUserRequestHandler(applicationView);
+            return new BUserRequestHandler(applicationView);
         }
     }
 }
