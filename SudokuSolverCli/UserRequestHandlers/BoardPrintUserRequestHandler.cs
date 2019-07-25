@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.Composition;
-using SudokuSolverCli.Assessors.Commands;
+using SudokuSolverCli.Commands;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {

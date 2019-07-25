@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using SudokuSolverCli.Assessors.Commands;
+using SudokuSolverCli.Commands;
 
 namespace SudokuSolverCli.UserRequestHandlers
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace SudokuSolverCli.Assessors.Commands
+namespace SudokuSolverCli.Commands
 {
     public class BoardPrintCommand : Command
     {
