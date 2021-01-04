@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using SudokuSolverCli.Views;
 
 namespace SudokuSolverCli
 {
+    [DebuggerDisplay("Location={Location} Choices={CurrentElementSet.Count}")]
     public class Cell : IEquatable<Cell>
     {
         public readonly ElementSet CompleteElementSet;
