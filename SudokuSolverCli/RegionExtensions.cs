@@ -16,5 +16,21 @@ namespace SudokuSolverCli
             changedCells = temporaryChangedCells;
             return firstUsefulAssessor;
         }
+
+        public static IDictionary<Element, IList<Cell>> GetElementCellLists(this Region region)
+        {
+            return region.Cells.Aggregate(new Dictionary<Element, IList<Cell>>(), (dictionary, cell) =>
+                cell.CurrentElementSet.Aggregate(dictionary, (dictionary1, element) =>
+                {
+                    if (!dictionary1.TryGetValue(element, out var listCells))
+                    {
+                        listCells = new List<Cell>();
+                        dictionary1.Add(element, listCells);
+                    }
+                    listCells.Add(cell);
+                    return dictionary1;
+
+                }));
+        }
     }
 }
